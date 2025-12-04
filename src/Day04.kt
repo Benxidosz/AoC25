@@ -22,8 +22,9 @@ fun main() {
             val pos = IPos(x, y)
 
             var countNei = 0
-            neighbours.forEach { neiPos ->
-                if (matrix.isValidIndex(pos + neiPos) && matrix.get(pos + neiPos) == '@') ++countNei
+            neighbours.forEach { neiPosDiff ->
+                val neiPos = pos + neiPosDiff
+                if (matrix.isValidIndex(neiPos) && matrix.get(neiPos) == '@') ++countNei
             }
 
             if (countNei < 4) solution.add(pos)
@@ -49,28 +50,30 @@ fun main() {
             input[it].toList()
         }
 
-        do {
-            var test = false
-            var tmpRes = 0
-            val tmpSolution = mutableListOf<IPos>()
-            matrix.forEachIndexed { x, y, value ->
-                val pos = IPos(x, y)
-                if (value != '@' || solution.contains(pos)) return@forEachIndexed
+        fun tryRemove(pos: IPos) {
+            val value = matrix.get(pos)
+            if (value != '@' || solution.contains(pos)) return
 
-                var countNei = 0
-                neighbours.forEach { neiPos ->
-                    val neiPos = pos + neiPos
-                    if (matrix.isValidIndex(neiPos) && matrix.get(neiPos) == '@' && !solution.contains(neiPos)) ++countNei
-                }
+            var countNei = 0
+            neighbours.forEach { neiPosDiff ->
+                val neiPos = pos + neiPosDiff
+                if (matrix.isValidIndex(neiPos) && matrix.get(neiPos) == '@' && !solution.contains(neiPos)) ++countNei
+            }
 
-                if (countNei < 4) {
-                    tmpSolution.add(pos)
-                    test = true
-                    ++tmpRes
+            if (countNei < 4) {
+                solution.add(pos)
+                neighbours.forEach { neiPosDiff ->
+                    val neiPos = pos + neiPosDiff
+                    if (matrix.isValidIndex(neiPos)) {
+                        tryRemove(neiPos)
+                    }
                 }
             }
-            solution.addAll(tmpSolution)
-        } while (test)
+        }
+
+        matrix.forEachIndexed { x, y, _ ->
+            tryRemove(IPos(x, y))
+        }
 
         return solution.size
     }

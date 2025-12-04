@@ -16,7 +16,7 @@ fun main() {
             input[it].toList()
         }
 
-        matrix.forEachIndexed { x, y, value ->
+        matrix.forEachIndexed { x, y, _, value ->
             if (value != '@') return@forEachIndexed
 
             val pos = IPos(x, y)
@@ -71,7 +71,7 @@ fun main() {
             }
         }
 
-        matrix.forEachIndexed { x, y, _ ->
+        matrix.forEachIndexed { x, y, _, _ ->
             tryRemove(IPos(x, y))
         }
 

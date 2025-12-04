@@ -62,6 +62,18 @@ fun <T> List<List<T>>.isValidIndex(pos: IPos): Boolean {
 
 fun <T> List<List<T>>.get(pos: IPos) = get(pos.y)[pos.x]
 
+fun <T> List<List<T>>.forEachIndexed(action: (x: Int, y: Int, value: T) -> Unit) = forEachIndexed { y, row ->
+    row.forEachIndexed { x, value ->
+        action(x, y, value)
+    }
+}
+
+fun <T, R> List<List<T>>.mapIndexed(action: (x: Int, y: Int, value: T) -> R): List<List<R>> = mapIndexed { y, row ->
+    row.mapIndexed { x, value ->
+        action(x, y, value)
+    }
+}
+
 fun <T> List<MutableList<T>>.set(pos: IPos, value: T) {
     get(pos.y)[pos.x] = value
 }

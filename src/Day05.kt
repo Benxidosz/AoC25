@@ -44,8 +44,8 @@ fun main() {
                         // benne van egy meglevoben
                         return@add
                     }
-                    if (rangeToAdd.first < freshRange.first && rangeToAdd.last > freshRange.first ||
-                        rangeToAdd.first < freshRange.last && rangeToAdd.last > freshRange.last ) {
+                    if (rangeToAdd.first < freshRange.first && rangeToAdd.last >= freshRange.first ||
+                        rangeToAdd.first <= freshRange.last && rangeToAdd.last > freshRange.last ) {
                         rangesToDelete.add(freshRange)
                         rangeToAdd = min(rangeToAdd.first, freshRange.first)..max(rangeToAdd.last, freshRange.last)
                     }

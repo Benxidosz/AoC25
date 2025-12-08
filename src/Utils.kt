@@ -46,7 +46,7 @@ data class IPos(var x: Int, var y: Int) {
     operator fun unaryMinus() = IPos(-x, -y)
     fun rotate90CW() = IPos(y, x * -1)
     fun rotate90CCW() = IPos(y * -1, x)
-    fun length() = sqrt(pow(x.toDouble(), 2.0) + pow(y.toDouble(), 2.0)).toInt()
+    fun length() = sqrt(pow(x.toDouble(), 2.0) + pow(y.toDouble(), 2.0))
 }
 
 data class IPos3D(var x: Int, var y: Int, var z: Int) {
@@ -57,7 +57,7 @@ data class IPos3D(var x: Int, var y: Int, var z: Int) {
         z -= other.z
     }
 
-    fun length() = sqrt(pow(x.toDouble(), 2.0) + pow(y.toDouble(), 2.0) + pow(z.toDouble(), 2.0)).toInt()
+    fun length() = sqrt(pow(x.toDouble(), 2.0) + pow(y.toDouble(), 2.0) + pow(z.toDouble(), 2.0))
 }
 
 fun distance(a: IPos3D, b: IPos3D) = (b - a).length()

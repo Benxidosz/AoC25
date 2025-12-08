@@ -1,7 +1,9 @@
+import java.lang.StrictMath.pow
 import java.math.BigInteger
 import java.security.MessageDigest
 import kotlin.io.path.Path
 import kotlin.io.path.readText
+import kotlin.math.sqrt
 
 /**
  * Reads lines from the given input txt file.
@@ -44,8 +46,21 @@ data class IPos(var x: Int, var y: Int) {
     operator fun unaryMinus() = IPos(-x, -y)
     fun rotate90CW() = IPos(y, x * -1)
     fun rotate90CCW() = IPos(y * -1, x)
-    fun length() = x + y
+    fun length() = sqrt(pow(x.toDouble(), 2.0) + pow(y.toDouble(), 2.0)).toInt()
 }
+
+data class IPos3D(var x: Int, var y: Int, var z: Int) {
+    operator fun minus(other: IPos3D) = IPos3D(x - other.x, y - other.y, z - other.z)
+    operator fun minusAssign(other: IPos3D) {
+        x -= other.x
+        y -= other.y
+        z -= other.z
+    }
+
+    fun length() = sqrt(pow(x.toDouble(), 2.0) + pow(y.toDouble(), 2.0) + pow(z.toDouble(), 2.0)).toInt()
+}
+
+fun distance(a: IPos3D, b: IPos3D) = (b - a).length()
 
 fun <T> List<T>.containsAny(other: List<T>): Boolean {
     other.forEach {

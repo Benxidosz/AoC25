@@ -3,6 +3,7 @@ import java.math.BigInteger
 import java.security.MessageDigest
 import kotlin.io.path.Path
 import kotlin.io.path.readText
+import kotlin.math.absoluteValue
 import kotlin.math.sqrt
 
 /**
@@ -47,6 +48,11 @@ data class IPos(var x: Int, var y: Int) {
     fun rotate90CW() = IPos(y, x * -1)
     fun rotate90CCW() = IPos(y * -1, x)
     fun length() = sqrt(pow(x.toDouble(), 2.0) + pow(y.toDouble(), 2.0))
+    fun abs() = IPos(x.absoluteValue, y.absoluteValue)
+}
+
+operator fun Pair<IPos, IPos>.contains(pos: IPos): Boolean {
+    return first.x <= pos.x && first.y <= pos.y && second.x >= pos.x && second.y >= pos.y
 }
 
 data class IPos3D(var x: Int, var y: Int, var z: Int) {
